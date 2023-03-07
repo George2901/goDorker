@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/url"
 	"os"
@@ -21,7 +22,8 @@ const (
 )
 
 var (
-	wg sync.WaitGroup
+	wg     sync.WaitGroup
+	contor int = 0
 )
 
 func format(q string) []string {
@@ -69,6 +71,9 @@ func request_group(ll []string) {
 			}
 		}(i)
 		wg.Wait()
+
+		contor += len(ll)
+		fmt.Println(contor)
 	}
 }
 
