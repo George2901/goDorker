@@ -1,8 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"bufio"
 	"io/ioutil"
+	"log"
 	"net/url"
 	"os"
 	"strconv"
@@ -77,8 +78,35 @@ func request_group(ll []string) {
 	}
 }
 
+func unique(input []string) []string {
+	u := make([]string, 0, len(input))
+	m := make(map[string]bool)
+
+	for _, val := range input {
+		if _, ok := m[val]; !ok {
+			m[val] = true
+			u = append(u, val)
+		}
+	}
+
+	return u
+}
+func readLines(path string) ([]string, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	var lines []string
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	return lines, scanner.Err()
+}
+
 func main() {
-	fmt.Println("")
 	content, _ := ioutil.ReadFile(filename)
 	lines := strings.Split(string(content), "\n")
 
@@ -87,10 +115,26 @@ func main() {
 		for _, i := range lines {
 			request_group(format(i))
 
-			// reader := bufio.NewReader(os.Stdin)
-			// char, _, err := reader.ReadRune()
-			// _ = char
-			// _ = err
+			func() {
+				u, _ := readLines(results)
+				ll := len(u)
+				u = unique(u)
+				file, err := os.OpenFile("test.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+
+				if err != nil {
+					log.Fatalf("failed creating file: %s", err)
+				}
+
+				datawriter := bufio.NewWriter(file)
+
+				for _, data := range u {
+					_, _ = datawriter.WriteString(data + "\n")
+				}
+
+				datawriter.Flush()
+				file.Close()
+				println("had:", ll, " Have:", len(u), "scrapped:", ll-len(u))
+			}()
 		}
 	}
 
