@@ -4,9 +4,14 @@ target = 'texts/results.txt'
 # target = btc
 
 def main():
-    ll:set = None
+    ll:list = None
     with open(target,"r", encoding="utf8") as f:
-        ll = set(f.read().splitlines())
+        ll = f.read().splitlines()
+
+    for i,j in enumerate(ll):
+        if j.startswith('http'):pass
+        elif j.startswith('https'):pass
+        else:ll.pop(i)
         
 
     with open(target,"w", encoding="utf8") as f:

@@ -72,12 +72,13 @@ func request_group(ll []string) {
 		}(i)
 		wg.Wait()
 
-		contor += len(ll)
-		fmt.Println(contor)
+		// contor += len(ll)
+		// fmt.Println(contor)
 	}
 }
 
 func main() {
+	fmt.Println("")
 	content, _ := ioutil.ReadFile(filename)
 	lines := strings.Split(string(content), "\n")
 
