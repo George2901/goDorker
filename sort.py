@@ -1,6 +1,6 @@
 
 
-target = 'texts/results.txt'
+target = 'texts/zrafined.txt'
 # target = btc
 
 def main():
@@ -13,7 +13,7 @@ def main():
         elif j.startswith('https'):pass
         else:ll.pop(i)
         
-
+    ll = set(ll)
     with open(target,"w", encoding="utf8") as f:
         [f.write(i + '\n') for i in ll]
 

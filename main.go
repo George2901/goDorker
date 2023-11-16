@@ -119,7 +119,7 @@ func main() {
 				u, _ := readLines(results)
 				ll := len(u)
 				u = unique(u)
-				file, err := os.OpenFile("test.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+				file, err := os.OpenFile("texts/zrafined.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
 				if err != nil {
 					log.Fatalf("failed creating file: %s", err)
